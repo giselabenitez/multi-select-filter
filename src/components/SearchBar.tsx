@@ -5,7 +5,7 @@ interface SearchBarProps {
 
 const SearchBar = ({filterText, onTextChange}: SearchBarProps) => {
     return (
-        <div>
+        <div className="search-bar">
             <input
                 type={"text"}
                 value={filterText}

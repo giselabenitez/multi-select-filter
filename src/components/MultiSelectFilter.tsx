@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import SearchBar from "./SearchBar.tsx";
 import FilteredList from "./FilteredList.tsx";
 import {DataItem} from "../types/DataItem.ts";
+import "./MultiSelectFilter.scss";
 
 const MultiSelectFilter = () => {
     const [data, setData] = useState<DataItem[]>([]);
@@ -20,14 +21,14 @@ const MultiSelectFilter = () => {
         const filteredData = data.filter((item) =>
             item.name.toLowerCase().includes(filterText.toLowerCase()));
         setFiltered(filteredData);
-    }, [filterText]);
+    }, [data, filterText]);
 
     return (
-        <div>
+        <div className={"filter-container"}>
             <h3>Productgroep</h3>
             <SearchBar filterText={filterText} onTextChange={setFilterText}/>
             <FilteredList data={filtered}/>
-            <button>Toepassen</button>
+            <button className="apply-button">Toepassen</button>
         </div>
     );
 };

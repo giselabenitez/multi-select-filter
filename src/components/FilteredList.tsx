@@ -6,15 +6,9 @@ interface FilteredListProps {
 
 const FilteredList = ({data}: FilteredListProps) => {
     return (
-        <div
-            style={{
-                maxHeight: "300px",
-                overflowY: "auto",
-                border: "1px solid #ddd",
-                padding: "8px",
-            }}>
+        <div className="filtered-list">
             {data.map((item, index) => (
-                <label key={index}>
+                <label key={index} className="list-item">
                     <input type={"checkbox"} checked={item.checked}/>
                     {item.name}
                 </label>

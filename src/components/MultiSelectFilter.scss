@@ -1,0 +1,82 @@
+@use "sass:color";
+
+$primary-color: #3063d0;
+$border-color: #ddd;
+$bg-color: #f8f8f8;
+
+.filter-container {
+  background: $bg-color;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  padding: 16px;
+  width: 330px;
+  font-family: Arial, sans-serif;
+
+  h3 {
+    font-size: 16px;
+    font-weight: lighter;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  padding: 6px;
+  background: white;
+
+  input {
+    font-size: 15px;
+    font-weight: lighter;
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 6px;
+  }
+
+  img {
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+  }
+}
+
+.filtered-list {
+  height: 200px;
+  width: 325px;
+  overflow-y: auto;
+  background: $bg-color;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+
+    input[type="checkbox"] {
+      accent-color: $primary-color;
+    }
+  }
+}
+
+.apply-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  color: white;
+  background-color: $primary-color;
+  font-size: 18px;
+  font-weight: lighter;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: color.adjust($primary-color, $lightness: -10%);
+  }
+}
