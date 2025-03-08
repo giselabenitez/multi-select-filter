@@ -4,6 +4,10 @@ import FilteredList from "./FilteredList.tsx";
 import {DataItem} from "../types/DataItem.ts";
 import "./MultiSelectFilter.scss";
 
+const decodeHTML = (text: string) => {
+    return new DOMParser().parseFromString(text, "text/html").body.textContent || "";
+};
+
 const MultiSelectFilter = () => {
     const [data, setData] = useState<DataItem[]>([]);
     const [filterText, setFilterText] = useState("");
@@ -18,7 +22,7 @@ const MultiSelectFilter = () => {
     useEffect(() => {
         fetch("/items.json")
             .then((items) => items.json())
-            .then((items) => items.data.map((item: string) => ({name: item, checked: false} as DataItem)))
+            .then((items) => items.data.map((item: string) => ({name: decodeHTML(item), checked: false} as DataItem)))
             .then((data) => setData(data))
             .catch((error) => console.error("Error fetching JSON:", error));
     }, []);

@@ -10,7 +10,8 @@ const FilteredList = ({data, checkedList, onChecked}: FilteredListProps) => {
     const Row = ({item, index}: { item: DataItem, index: number }) => (
         <label key={index} className="list-item">
             <input type={"checkbox"} checked={item.checked} onChange={() => onChecked(item)}/>
-            {item.name}
+            <span className="checkmark"/>
+            <span className="item-name">{item.name}</span>
         </label>
     );
 
