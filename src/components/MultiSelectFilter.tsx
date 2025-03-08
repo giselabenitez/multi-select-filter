@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import SearchBar from "./SearchBar.tsx";
 import FilteredList from "./FilteredList.tsx";
 import {DataItem} from "../types/DataItem.ts";
@@ -11,29 +11,24 @@ const decodeHTML = (text: string) => {
 const MultiSelectFilter = () => {
     const [data, setData] = useState<DataItem[]>([]);
     const [filterText, setFilterText] = useState("");
-    const [filtered, setFiltered] = useState<DataItem[]>([]);
-    const [selected, setSelected] = useState<DataItem[]>([]);
+    const filtered = useMemo(() => data.filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()) && !item.checked),
+        [data, filterText]
+    );
+    const selected = useMemo(() => data.filter((item) => item.checked), [data]);
 
     const handleChecked = (item: DataItem) => {
-        const updatedData: DataItem[] = data.map((i) => item.name === i.name ? {...i, checked: !i.checked} : i);
-        setData(updatedData);
+        setData((prevState) => prevState.map((i) => item.name === i.name ? {...i, checked: !i.checked} : i));
     }
 
     useEffect(() => {
         fetch("/items.json")
             .then((items) => items.json())
-            .then((items) => items.data.map((item: string) => ({name: decodeHTML(item), checked: false} as DataItem)))
-            .then((data) => setData(data))
+            .then(({data}) => setData(data.map((item: string) => ({
+                name: decodeHTML(item),
+                checked: false
+            } as DataItem))))
             .catch((error) => console.error("Error fetching JSON:", error));
     }, []);
-
-    useEffect(() => {
-        const filteredData = data
-            .filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()))
-            .filter((item) => !item.checked);
-        setFiltered(filteredData);
-        setSelected(data.filter(item => item.checked));
-    }, [data, filterText]);
 
     return (
         <div className={"filter-container"}>
