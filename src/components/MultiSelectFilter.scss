@@ -47,7 +47,7 @@ $bg-color: #f8f8f8;
 }
 
 .filtered-list {
-  height: 250px;
+  height: 260px;
   width: 325px;
   overflow-y: scroll;
   scrollbar-width: thin;
@@ -131,5 +131,55 @@ $bg-color: #f8f8f8;
 
   &:hover {
     background-color: color.adjust($primary-color, $lightness: -10%);
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-container {
+    width: 85%;
+  }
+
+  .filtered-list {
+    width: 100%;
+  }
+
+  .list-item {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-container {
+    width: 85%;
+  }
+
+  .filtered-list {
+    width: 100%;
+  }
+
+  .list-item {
+    font-size: 12px;
+  }
+
+  .apply-button {
+    font-size: 14px;
+  }
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .filter-container {
+    padding: 15px;
+  }
+
+  .filtered-list {
+    max-height: 150px;
+  }
+
+  .list-item {
+    font-size: 12px;
+  }
+
+  .apply-button {
+    font-size: 14px;
   }
 }
