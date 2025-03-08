@@ -17,17 +17,24 @@ const MultiSelectFilter = () => {
     const selected = useMemo(() => data.filter((item) => item.checked), [data]);
 
     const handleChecked = (item: DataItem) => {
-        setData((prevState) => prevState.map((i) => item.name === i.name ? {...i, checked: !i.checked} : i));
+        const updatedData: DataItem[] = data.map((i) => item.name === i.name ? {...i, checked: !i.checked} : i);
+        setData(updatedData);
+        localStorage.setItem("dataItems", JSON.stringify(updatedData));
     }
 
     useEffect(() => {
-        fetch("/items.json")
-            .then((items) => items.json())
-            .then(({data}) => setData(data.map((item: string) => ({
-                name: decodeHTML(item),
-                checked: false
-            } as DataItem))))
-            .catch((error) => console.error("Error fetching JSON:", error));
+        const storedData = localStorage.getItem("dataItems");
+        if (storedData) {
+            setData(JSON.parse(storedData));
+        } else {
+            fetch("/items.json")
+                .then((items) => items.json())
+                .then(({data}) => setData(data.map((item: string) => ({
+                    name: decodeHTML(item),
+                    checked: false
+                } as DataItem))))
+                .catch((error) => console.error("Error fetching JSON:", error));
+        }
     }, []);
 
     return (
