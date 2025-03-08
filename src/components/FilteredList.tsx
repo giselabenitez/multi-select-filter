@@ -2,16 +2,25 @@ import {DataItem} from "../types/DataItem.ts";
 
 interface FilteredListProps {
     data: DataItem[];
+    checkedList: DataItem[];
+    onChecked: (item: DataItem) => void;
 }
 
-const FilteredList = ({data}: FilteredListProps) => {
+const FilteredList = ({data, checkedList, onChecked}: FilteredListProps) => {
+    const Row = ({item, index}: { item: DataItem, index: number }) => (
+        <label key={index} className="list-item">
+            <input type={"checkbox"} checked={item.checked} onChange={() => onChecked(item)}/>
+            {item.name}
+        </label>
+    );
+
     return (
         <div className="filtered-list">
+            {checkedList.map((item, index) => (
+                <Row item={item} index={index}/>
+            ))}
             {data.map((item, index) => (
-                <label key={index} className="list-item">
-                    <input type={"checkbox"} checked={item.checked}/>
-                    {item.name}
-                </label>
+                <Row item={item} index={index}/>
             ))}
         </div>
     );

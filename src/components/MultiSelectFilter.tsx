@@ -8,6 +8,12 @@ const MultiSelectFilter = () => {
     const [data, setData] = useState<DataItem[]>([]);
     const [filterText, setFilterText] = useState("");
     const [filtered, setFiltered] = useState<DataItem[]>([]);
+    const [selected, setSelected] = useState<DataItem[]>([]);
+
+    const handleChecked = (item: DataItem) => {
+        const updatedData: DataItem[] = data.map((i) => item.name === i.name ? {...i, checked: !i.checked} : i);
+        setData(updatedData);
+    }
 
     useEffect(() => {
         fetch("/items.json")
@@ -18,16 +24,18 @@ const MultiSelectFilter = () => {
     }, []);
 
     useEffect(() => {
-        const filteredData = data.filter((item) =>
-            item.name.toLowerCase().includes(filterText.toLowerCase()));
+        const filteredData = data
+            .filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()))
+            .filter((item) => !item.checked);
         setFiltered(filteredData);
+        setSelected(data.filter(item => item.checked));
     }, [data, filterText]);
 
     return (
         <div className={"filter-container"}>
             <h3>Productgroep</h3>
             <SearchBar filterText={filterText} onTextChange={setFilterText}/>
-            <FilteredList data={filtered}/>
+            <FilteredList data={filtered} checkedList={selected} onChecked={handleChecked}/>
             <button className="apply-button">Toepassen</button>
         </div>
     );
