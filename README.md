@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+# Multi-select filter App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React application that allows users to filter and select items dynamically.
+It uses Context API for state management and Jest/Vitest for testing.
 
-Currently, two official plugins are available:
+## Architecture and Design Decisions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To ensure clean separation of concerns and maintainability, the project structure is organized into several key folders:
 
-## Expanding the ESLint configuration
+* components: Contains all reusable React components.
+* context: Includes context-related files, such as providers and custom hooks.
+* types: Stores type definitions used across the application.
+* tests: Contains all unit tests to validate the functionality of the components and logic.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This structure promotes modularity, easier navigation, and scalability.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Key technologies
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* Context API: it is used for global state management, and it was chosen over Redux for simplicity.
+* Vite: Chosen over Create React App for faster builds and better performance.
+* Sass: Used for styling to allow more efficient and scalable CSS, using variables and nesting
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+#### Libraries and tools used:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+* React-Toastify: Used for displaying toast notifications. This library was chosen since its easy to use and implement.
+
+## Running the App
+
+To get the project up and running, follow these steps:
+
+**1. Install dependencies:**
+
+`npm install`
+
+**2. Start Development server:**
+This will open the app in your browser at http://localhost:5174/
+
+`npm run dev`
+
+**3. Execute all tests:**
+To run the unit tests and ensure everything is functioning as expected:
+
+`npm test`
+
+## Challenges faced and solutions
+
+During the development of this app, I faced a few challenges, particularly with the technologies I hadn't used
+extensively before.
+
+* **Sass and Context API**: While I use Sass and Context API in my current job, this was my first time setting them up
+  from scratch. I needed to refer to documentation and experiment with different configurations to get everything
+  working smoothly.
+
+* **Vite**: I hadn't worked with Vite before, but I chose it because it was recommended by my IDE for faster build
+  times. The transition was smooth, though I had to learn some Vite-specific configurations.
+
+* **Vitest**: This was also my first time using Vitest, and I encountered some challenges when it came to using mocking.
+  I had to dive into the documentation and work through examples to understand how to set up and use mock functions
+  correctly.
+
+* **Style Challenges**: The design from the visual reference required a specific color scheme based on a provided image.
+  To achieve this, I used online tools to extract a color palette and create a similar look. Additionally, I needed to
+  test quite a bit to get the checkbox to appear squared, which required some trial and error.
