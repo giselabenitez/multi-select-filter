@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {DataItem} from "../types/DataItem.ts";
-import {FilterContext} from "./FilterContext.ts";
+import {DataItem} from "../types/DataItem";
+import {FilterContext} from "./FilterContext";
 
 const decodeHTML = (text: string) => {
     return new DOMParser().parseFromString(text, "text/html").body.textContent || "";
@@ -18,7 +18,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({childre
         } else {
             fetch("/items.json")
                 .then((items) => items.json())
-                .then(({data}) => setData(data.map((item: string) => ({
+                .then(({data}: { data: any }) => setData(data.map((item: string) => ({
                     name: decodeHTML(item),
                     checked: false
                 } as DataItem))))

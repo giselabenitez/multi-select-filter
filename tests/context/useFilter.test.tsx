@@ -1,16 +1,20 @@
 import React from "react";
-import {describe, expect, test} from "vitest";
-import {fireEvent, render, screen} from "@testing-library/react";
+import {describe, expect, Mock, test, vi} from "vitest";
+import {act, fireEvent, render, screen} from "@testing-library/react";
 import {useFilter} from "../../src/context/useFilter";
 import {FilterProvider} from "../../src/context/FilterProvider";
 
+globalThis.fetch = vi.fn();
+
 describe("useFilter", () => {
-    test("should update filterText state when setFilterText is called", () => {
-        render(
-            <FilterProvider>
-                <TestComponent/>
-            </FilterProvider>
-        );
+    test("should update filterText state when setFilterText is called", async () => {
+        (globalThis.fetch as Mock).mockResolvedValueOnce({
+            json: vi.fn().mockResolvedValue({data: [], filterText: ""}),
+        });
+
+        await act(async () => {
+            render(<FilterProvider><TestComponent/></FilterProvider>);
+        });
 
         const input = screen.getByRole("textbox");
         fireEvent.change(input, {target: {value: "Computer"}});

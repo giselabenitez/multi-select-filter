@@ -9,16 +9,30 @@
     }
   ],
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "declaration": true,
+    "composite": true,
+    "noEmit": false,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
     "src/**/*",
     "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.d.ts"
   ]
 }

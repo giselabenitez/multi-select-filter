@@ -1,4 +1,4 @@
-import {DataItem} from "./DataItem.ts";
+import {DataItem} from "./DataItem";
 
 export interface FilterContextType {
     data: DataItem[];

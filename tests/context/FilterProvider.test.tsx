@@ -1,6 +1,6 @@
 import React from "react";
-import {describe, expect, test, vi} from "vitest";
-import {render, screen} from "@testing-library/react";
+import {describe, expect, Mock, test, vi} from "vitest";
+import {act, render, screen} from "@testing-library/react";
 import {FilterProvider} from "../../src/context/FilterProvider";
 import {useFilter} from "../../src/context/useFilter";
 
@@ -8,17 +8,26 @@ vi.mock("../../src/context/useFilter", () => ({
     useFilter: vi.fn(),
 }));
 
+globalThis.fetch = vi.fn();
+
 describe("Filter Provider", () => {
-    test("should provide filter text context value", () => {
+    test("should provide filter text context value", async () => {
         const mockData = [{name: "Games", checked: false}];
-        useFilter.mockReturnValue({
+
+        (globalThis.fetch as Mock).mockResolvedValueOnce({
+            json: vi.fn().mockResolvedValue({data: mockData}),
+        });
+
+        (useFilter as Mock).mockReturnValue({
             data: mockData,
             filterText: "",
             setFilterText: vi.fn(),
             handleChecked: vi.fn(),
         });
 
-        render(<FilterProvider><MockComponent/></FilterProvider>);
+        await act(async () => {
+            render(<FilterProvider><MockComponent/></FilterProvider>);
+        });
         expect(screen.queryByText("Games")).toBeInTheDocument();
     });
 });

@@ -1,32 +1,41 @@
 import React, {JSX} from "react";
-import {beforeEach, describe, expect, test, vi} from "vitest";
+import {beforeEach, describe, expect, Mock, test, vi} from "vitest";
 import MultiSelectFilter from "../../src/components/MultiSelectFilter";
 import {useFilter} from "../../src/context/useFilter";
-import {FilterContextType} from "../../src/types/FilterContextType";
 import {fireEvent, render, screen} from "@testing-library/react";
+import {FilterContextType} from "../../src/types/FilterContextType";
 
 vi.mock("../../src/context/useFilter", () => ({
     useFilter: vi.fn<() => FilterContextType>(),
 }));
 
+const mockUseFilter = (mockData: Partial<FilterContextType>) => {
+    (useFilter as Mock).mockReturnValue({
+        data: mockData.data || [],
+        filterText: mockData.filterText || "",
+        setFilterText: mockData.setFilterText || vi.fn(),
+        handleChecked: mockData.handleChecked || vi.fn(),
+    });
+};
+
 describe("MultiSelectFilter", () => {
     let component: JSX.Element;
+    const mockLocalStorage = {
+        setItem: vi.fn(),
+        getItem: vi.fn(),
+        clear: vi.fn(),
+        removeItem: vi.fn(),
+        key: vi.fn(),
+        length: 0,
+    };
 
     beforeEach(() => {
-        global.localStorage = {
-            setItem: vi.fn(),
-            getItem: vi.fn(),
-            clear: vi.fn(),
-            removeItem: vi.fn(),
-            key: vi.fn(),
-            length: 0,
-        };
-
+        globalThis.localStorage = mockLocalStorage as any;
         component = <MultiSelectFilter/>;
     });
 
     test("renders without crashing when no data", async () => {
-        useFilter.mockReturnValue({
+        mockUseFilter({
             data: [],
             filterText: "",
             setFilterText: vi.fn(),
@@ -39,7 +48,7 @@ describe("MultiSelectFilter", () => {
     });
 
     test("renders with data and no filterText set", async () => {
-        useFilter.mockReturnValue({
+        mockUseFilter({
             data: [{name: "Thrillers", checked: false}, {name: "Fantasy", checked: false}],
             filterText: "",
             setFilterText: vi.fn(),
@@ -54,7 +63,7 @@ describe("MultiSelectFilter", () => {
     });
 
     test("renders with filter text", async () => {
-        useFilter.mockReturnValue({
+        mockUseFilter({
             data: [{name: "Kinderboeken", checked: false}, {name: "Kookboeken", checked: false}],
             filterText: "Kookboeken",
             setFilterText: vi.fn(),
@@ -69,7 +78,7 @@ describe("MultiSelectFilter", () => {
     });
 
     test("filtered list is updated based on filter text", async () => {
-        useFilter.mockReturnValue({
+        mockUseFilter({
             data: [
                 {name: "Psychologie", checked: false},
                 {name: "Alle boeken", checked: false},
@@ -91,7 +100,7 @@ describe("MultiSelectFilter", () => {
 
     test("handleChecked is called when the item is clicked", async () => {
         const mockHandleChecked = vi.fn();
-        useFilter.mockReturnValue({
+        mockUseFilter({
             data: [{name: "Film", checked: false}, {name: "Games", checked: false}],
             filterText: "",
             setFilterText: vi.fn(),
@@ -107,10 +116,7 @@ describe("MultiSelectFilter", () => {
     });
 
     test("updated data is saved in localStorage when 'Toepassen' button is clicked", async () => {
-        const mockLocalStorage = {setItem: vi.fn()};
-        global.localStorage = mockLocalStorage;
-
-        useFilter.mockReturnValue({
+        mockUseFilter({
             data: [{name: "Film", checked: true}],
             filterText: "",
             setFilterText: vi.fn(),

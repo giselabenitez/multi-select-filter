@@ -9,7 +9,7 @@ const SearchBar = ({filterText, onTextChange}: SearchBarProps) => {
             <input
                 type={"text"}
                 value={filterText}
-                onChange={event => onTextChange(event.target.value)}
+                onChange={event => onTextChange((event.target as HTMLInputElement).value)}
                 placeholder={"Zoek op..."}/>
             <img src={"/search.svg"} alt={"search"}/>
         </div>);

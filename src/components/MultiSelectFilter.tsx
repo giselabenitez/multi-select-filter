@@ -1,8 +1,10 @@
 import {useMemo} from "react";
-import SearchBar from "./SearchBar.tsx";
-import FilteredList from "./FilteredList.tsx";
+import SearchBar from "./SearchBar";
+import FilteredList from "./FilteredList";
 import "./MultiSelectFilter.scss";
-import {useFilter} from "../context/useFilter.ts";
+import {useFilter} from "../context/useFilter";
+import "react-toastify/dist/ReactToastify.css";
+import {toast} from "react-toastify";
 
 const MultiSelectFilter = () => {
     const {data, filterText, setFilterText, handleChecked} = useFilter();
@@ -11,7 +13,10 @@ const MultiSelectFilter = () => {
     );
     const selected = useMemo(() => data.filter((item) => item.checked), [data]);
 
-    const onApplySelected = () => localStorage.setItem("dataItems", JSON.stringify(data));
+    const onApplySelected = () => {
+        localStorage.setItem("dataItems", JSON.stringify(data));
+        toast.success("Je selectie is opgeslagen!", {position: "bottom-right", autoClose: 3000});
+    };
 
     return (
         <div className={"filter-container"}>
