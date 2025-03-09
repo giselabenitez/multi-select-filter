@@ -1,0 +1,178 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MultiSelectFilter > handleChecked is called when the item is clicked 1`] = `
+<DocumentFragment>
+  <div
+    class="filter-container"
+  >
+    <h3>
+      Productgroep
+    </h3>
+    <div
+      class="search-bar"
+    >
+      <input
+        placeholder="Zoek op..."
+        type="text"
+        value=""
+      />
+      <img
+        alt="search"
+        src="/search.svg"
+      />
+    </div>
+    <div
+      class="filtered-list"
+    >
+      <label
+        class="list-item"
+      >
+        <input
+          type="checkbox"
+        />
+        <span
+          class="checkmark"
+        />
+        <span
+          class="item-name"
+        >
+          Film
+        </span>
+      </label>
+      <label
+        class="list-item"
+      >
+        <input
+          type="checkbox"
+        />
+        <span
+          class="checkmark"
+        />
+        <span
+          class="item-name"
+        >
+          Games
+        </span>
+      </label>
+    </div>
+    <button
+      class="apply-button"
+    >
+      Toepassen
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MultiSelectFilter > renders with data and no filterText set 1`] = `
+<DocumentFragment>
+  <div
+    class="filter-container"
+  >
+    <h3>
+      Productgroep
+    </h3>
+    <div
+      class="search-bar"
+    >
+      <input
+        placeholder="Zoek op..."
+        type="text"
+        value=""
+      />
+      <img
+        alt="search"
+        src="/search.svg"
+      />
+    </div>
+    <div
+      class="filtered-list"
+    >
+      <label
+        class="list-item"
+      >
+        <input
+          type="checkbox"
+        />
+        <span
+          class="checkmark"
+        />
+        <span
+          class="item-name"
+        >
+          Thrillers
+        </span>
+      </label>
+      <label
+        class="list-item"
+      >
+        <input
+          type="checkbox"
+        />
+        <span
+          class="checkmark"
+        />
+        <span
+          class="item-name"
+        >
+          Fantasy
+        </span>
+      </label>
+    </div>
+    <button
+      class="apply-button"
+    >
+      Toepassen
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MultiSelectFilter > renders with filter text 1`] = `
+<DocumentFragment>
+  <div
+    class="filter-container"
+  >
+    <h3>
+      Productgroep
+    </h3>
+    <div
+      class="search-bar"
+    >
+      <input
+        placeholder="Zoek op..."
+        type="text"
+        value="Kookboeken"
+      />
+      <img
+        alt="search"
+        src="/search.svg"
+      />
+    </div>
+    <div
+      class="filtered-list"
+    >
+      <label
+        class="list-item"
+      >
+        <input
+          type="checkbox"
+        />
+        <span
+          class="checkmark"
+        />
+        <span
+          class="item-name"
+        >
+          Kookboeken
+        </span>
+      </label>
+    </div>
+    <button
+      class="apply-button"
+    >
+      Toepassen
+    </button>
+  </div>
+</DocumentFragment>
+`;
